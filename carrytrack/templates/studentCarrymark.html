@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+        * {
+         box-sizing: border-box;
+         }
+        body {
+         height: 100%;
+         font-family: Arial, sans-serif;
+        background: linear-gradient(45deg, royalblue, #FFFFFF, #0000FF);
+        background-size: 200% 200%;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         transition: transform 0.5s;
+         z-index: 1;
+         margin: 0;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         z-index: 999;
+         }
+         .navbar.hidden {
+         transform: translateX(-100%);
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .form-group {
+         margin-bottom: 15px;
+         }
+         .form-group label {
+         display: block;
+         font-weight: bold;
+         }
+         .form-group button {
+         width: 100%;
+         padding: 10px;
+         background-color: #333;
+         color: #fff;
+         border: none;
+         cursor: pointer;
+         }
+         .form-group button:hover {
+         background-color: #111;
+         } 
+         .welcome-message {
+         margin-bottom: 20px;
+         font-size: 30px;
+         }
+         .course-taken h2 {
+         font-size: 24px;
+         margin-bottom: 20px;
+         }
+         .course-taken table {
+         width: 100%;
+         border-collapse: collapse;
+         margin-bottom: 20px;
+         }
+         .course-taken table th,
+         .course-taken table td {
+         padding: 10px;
+         border: 1px solid #ccc;
+         }
+         .course-taken table th {
+         background-color: #f2f2f2;
+         text-align: left;
+         }
+         .course-taken a {
+         display: inline-block;
+         margin-top: 20px;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 4px;
+         }
+         .course-taken a:hover {
+         background-color: #111;
+         }
+         table {
+          background-color: #f2f2f2;
+         width: 100%;
+         border-collapse: collapse;
+         margin-bottom: 20px;
+         }
+         table th,
+         table td {
+         padding: 10px;
+         border: 1px solid #ccc;
+         }
+         table th {
+         background-color: #f2f2f2;
+         text-align: left;
+         }
+         table td a {
+         display: inline-block;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 4px;
+         }
+         table td a:hover {
+         background-color: #111;
+         }
+         .container {
+          flex-direction: column;
+          align-items: center;
+          display: flex;
+          }
+         .add-course-button {
+         display: inline-block;
+         margin-top: 20px;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 4px;
+         }
+         .add-course-button:hover {
+         background-color: #111;
+         }
+         .profile {
+         display: flex;
+         align-items: center;
+         margin-bottom: 20px;
+         border: 2px solid #ccc;
+         padding: 20px;
+         background-color: #f2f2f2;
+         border-radius: 4px;
+         box-shadow: #b52f2f 0px 0px 10px;
+         }
+         .profile-image {
+         flex-shrink: 0; 
+         margin-right: 20px;
+         }
+         .profile-info {
+         flex-grow: 1; 
+         }
+         .profile img {
+         width: 200px;
+         height: 200px;
+         object-fit: cover;
+         border-radius: 50%;
+         }
+         .profile h2 {
+         margin-top: 20px;
+         font-size: 24px;
+         }
+         .profile p {
+         margin-top: 10px;
+         font-size: 16px;
+         color: #666;
+         }
+         button.buttonprofile {
+         align-self: flex-end;
+         margin-top: 20px;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         }
+         button.buttonprofile:hover {
+         background-color: #111;
+         }
+         form button.buttonprofile {
+         margin-top: 20px;
+         padding: 10px 20px;
+         background-color: rgb(210, 59, 59);
+         color: #000000;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         }
+         form button.buttonprofile:hover {
+         background-color: darkred;
+         }
+      </style>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+         window.addEventListener('DOMContentLoaded', () => {
+           const logoElement = document.querySelector('.logo');
+           const homeUrl = "{% url 'homeLecturer' %}";
+         
+           logoElement.addEventListener('click', () => {
+             window.location.href = homeUrl;
+           });
+         });
+         
+         $(document).ready(function() {
+           $('.update-carrymark-btn').click(function(e) {
+             e.preventDefault();
+             var carrymarkId = $(this).data('carrymark-id');
+             var updateBtn = $(this); 
+         
+             $.ajax({
+               type: 'POST',
+               url: '/review-carrymark/' + carrymarkId + '/',
+               data: {
+                 csrfmiddlewaretoken: getCookie('csrftoken')
+               },
+               success: function(response) {
+                 updateBtn.closest('tr').find('.is-reviewed').html('&#x2705;'); // Update the checkmark symbol
+                 updateBtn.remove(); 
+               },
+               error: function(xhr) {
+                 console.log(xhr.responseText);
+               }
+             });
+           });
+         });
+         
+         function getCookie(name) {
+           var cookieValue = null;
+           if (document.cookie && document.cookie !== '') {
+             var cookies = document.cookie.split(';');
+             for (var i = 0; i < cookies.length; i++) {
+               var cookie = cookies[i].trim();
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                 break;
+               }
+             }
+           }
+           return cookieValue;
+         }
+
+          window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 0) {
+               navbar.classList.add('hidden');
+            } else {
+               navbar.classList.remove('hidden');
+            }
+         });
+      </script>
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="logo">
+            CarryTrack
+         </div>
+      </div>
+      <div class="container" style="margin-top: 100px;">
+      <div class="profile">
+         <div class="profile-image">
+            {% if student.studentImage %}
+            <img src="{{ student.studentImage.url }}" alt="image" method="GET" />
+            {% else %}
+            {% endif %}  
+         </div>
+         <div class="profile-info">
+            <h2>{{ student.studentName }}</h2>
+            <p>Matric ID: {{ student.matricID }}</p>
+            <p>Phone: {{ student.studentPhone }}</p>
+            <p>Semester: {{ student.currentSemester }}</p>
+            <form action="{% url 'removeStudent' student.matricID %}">
+               <button class="buttonprofile" type="submit">Remove Student</button>
+            </form>
+         </div>
+      </div>
+      <div class="container">
+         <h2>{{ student.studentName }} Carry Marks</h2>
+         <table>
+            <thead>
+               <tr>
+                  <th>Course Code</th>
+                  <th>Course Name</th>
+                  <th>Assessment 1</th>
+                  <th>Assessment 2</th>
+                  <th>Assessment 3</th>
+                  <th>Assessment 4</th>
+                  <th>Total Marks</th>
+                  <th>Is Reviewed</th>
+                  <th>Remarks</th>
+                  <th>Actions</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for carryMark in student.carrymark_set.all %}
+               <tr>
+                  <td>{{ carryMark.course.courseCode }}</td>
+                  <td>{{ carryMark.course.courseName }}</td>
+                  <td>{{ carryMark.assesment1|add:0 }}</td>
+                  <td>{{ carryMark.assesment2|add:0 }}</td>
+                  <td>{{ carryMark.assesment3|add:0 }}</td>
+                  <td>{{ carryMark.assesment4|add:0 }}</td>
+                  <td>{{ carryMark.assesment1|add:0|add:carryMark.assesment2|add:0|add:carryMark.assesment3|add:0|add:carryMark.assesment4|add:0 }}/{{ carryMark.course.maxCarryMark }}</td>
+                  <td class="is-reviewed">
+                     {% if carryMark.is_reviewed %}
+                     <span>&#x2705;</span>
+                     {% else %}
+                     <span>&#x274C;</span>
+                     {% endif %}
+                  </td>
+                  <td>{{ carryMark.remarks }}</td>
+                  <td>
+                     {% if not carryMark.is_reviewed %}
+                     <a href="#" class="update-carrymark-btn" data-carrymark-id="{{ carryMark.pk }}">Approved</a>
+                     <br><br>
+                     {% endif %}
+                     <a href="{% url 'leaveRemarks' carryMark.pk %}">Leave Remarks</a>
+                  </td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+   </body>
+</html>

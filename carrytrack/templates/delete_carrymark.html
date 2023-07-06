@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         * {
+         box-sizing: border-box;
+         }
+         html, body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         font-family: Arial, sans-serif;
+         background: linear-gradient(45deg, royalblue, #FFFFFF, #0000FF);
+         }
+         body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .login-container {
+         width: 300px;
+         padding: 20px;
+         background-color: #f2f2f2;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         }
+         .login-container h2 {
+         text-align: center;
+         color: #333;
+         }
+         .form-group {
+         margin-bottom: 15px;
+         }
+         .form-group label {
+         display: block;
+         font-weight: bold;
+         color: #333;
+         }
+         .form-group input[type="text"],
+         .form-group input[type="password"] {
+         width: 100%;
+         padding: 8px;
+         border: 1px solid #ccc;
+         border-radius: 3px;
+         }
+         .form-group button {
+         width: 100%;
+         padding: 10px;
+         background-color: #cc0000;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         }
+         .form-group button:hover {
+         background-color: #b52f2f;
+         }   
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         h2 {
+         text-align: center;
+         margin-bottom: 20px;
+         }
+         .container {
+         width: 800px;
+         margin-top: 50px;
+         }
+         .form-group {
+         margin-bottom: 20px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         }
+         p {
+         text-align: center;
+         margin-bottom: 20px;
+         }
+         button {
+         width: 100%;
+         padding: 10px;
+         background-color: #333;
+         color: #fff;
+         border: none;
+         cursor: pointer;
+         border-radius: 3px;
+         }
+         button:hover {
+         background-color: #111;
+         }
+         .delete-button {
+         flex-grow: 1;
+         width: 90%;
+         margin-right: 5px;
+         padding: 10px;
+         background-color: #ff0000;
+         color: #fff;
+         border: none;
+         cursor: pointer;
+         }
+         .cancel-button {
+         flex-grow: 1;
+         width: 80%;
+         padding: 10px;
+         margin-right: 5px;
+         background-color: #ccc;
+         color: #000;
+         border: none;
+         cursor: pointer;
+         text-decoration: solid;
+         }
+         .cancel-button:hover {
+         background-color: #999;
+         }
+         .navbar form {
+         display: flex;
+         align-items: center;
+         }
+         .navbar form button {
+         padding: 8px 15px;
+         background-color: grey;
+         color: #fff;
+         border: none;
+         cursor: pointer;
+         margin-left: 10px;
+         }
+         .navbar form button:hover {
+         background-color: #111;
+         }
+         .container{
+         display: flex;
+         flex-direction: column;
+         padding: 20px;
+         border: #b52f2f solid 2px;
+         box-shadow: #b52f2f 0px 0px 10px;
+         background-color: #f2f2f2;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="logo">
+            CarryTrack
+         </div>
+      </div>
+      <div class="container">
+         <h2>Confirm Carrymark Deletion</h2>
+         <p>Are you sure you want to delete the carrymark for {{ carrymark.course.courseName }}?</p>
+         <form method="POST" action="{% url 'delete_carrymark' carrymark.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="carrymark_id" value="{{ carrymark.pk }}">
+            <input type="hidden" name="confirm-delete" value="yes">
+            <div class="form-group">
+               <div style="display: flex; gap: 5px;">
+                  <a class="cancel-button" href="{% url 'homeStudent' %}">Cancel</a>
+                  <button type="submit" class="delete-button">Confirm</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </body>
+</html>

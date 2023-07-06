@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         * {
+         box-sizing: border-box;
+         }
+         html, body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         font-family: Arial, sans-serif;
+         background: linear-gradient(45deg, royalblue, #FFFFFF, #0000FF);
+         }
+         body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .login-container {
+         width: 300px;
+         padding: 20px;
+         background-color: #f2f2f2;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         }
+         .login-container h2 {
+         text-align: center;
+         color: #333;
+         }
+         .form-group {
+         margin-bottom: 15px;
+         }
+         .form-group label {
+         display: block;
+         font-weight: bold;
+         color: #333;
+         }
+         .form-group input[type="text"],
+         .form-group input[type="password"] {
+         width: 100%;
+         padding: 8px;
+         border: 1px solid #ccc;
+         border-radius: 3px;
+         }
+         .form-group button {
+         width: 100%;
+         padding: 10px;
+         background-color: #337ab7;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         }
+         .form-group button:hover {
+         background-color: #23527c;
+         }   
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .container {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         margin-top: 15px;
+         background-color: #f2f2f2;
+         padding: 20px;
+         border: #b52f2f solid 2px;
+         box-shadow: #b52f2f 0px 0px 10px;
+         }
+         .profile {
+         display: flex;
+         align-items: center;
+         margin-bottom: 50px;
+         border: 1px solid #ccc;
+         padding: 20px;
+         border-radius: 4px;
+         }
+         .profile-image {
+         flex-shrink: 0;
+         margin-right: 20px;
+         }
+         .profile-info {
+         flex-grow: 1;
+         }
+         .profile img {
+         width: 200px;
+         height: 200px;
+         object-fit: cover;
+         border-radius: 50%;
+         }
+         .profile h2 {
+         margin-top: 20px;
+         font-size: 24px;
+         }
+         .profile p {
+         margin-top: 10px;
+         font-size: 16px;
+         color: #666;
+         }
+         .welcome-message {
+         margin-bottom: 20px;
+         text-align: center;
+         font-size: 30px;
+         }
+         button.buttonprofile {
+         align-self: flex-end;
+         margin-top: 20px;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         }
+         button.buttonprofile:hover {
+         background-color: #111;
+         }
+         form.edit-form {
+         margin-top: 20px;
+         width: 100%;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         }
+         form.edit-form label {
+         margin-top: 10px;
+         font-size: 16px;
+         }
+         form.edit-form input[type="text"],
+         form.edit-form input[type="tel"] {
+         padding: 10px;
+         width: 300px;
+         margin-top: 5px;
+         border: 1px solid #ccc;
+         border-radius: 4px;
+         }
+         form.edit-form input[type="file"],
+         form.delete-form button[type="submit"] {
+         display: block;
+         padding: 10px;
+         width: 300px;
+         margin-top: 5px;
+         border: 1px solid #ccc;
+         border-radius: 4px;
+         background-color: white;
+         color: #666;
+         }
+         form.edit-form button[type="submit"],
+         form.delete-form button[type="submit"] {
+         margin-top: 20px;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         }
+         form.edit-form button[type="submit"]:hover,
+         form.delete-form button[type="submit"]:hover {
+         background-color: #111;
+         }
+         form.edit-form .delete-profile {
+         margin-top: 10px;
+         }
+         form.delete-form button[type="submit"] {
+         margin-top: 10px;
+         padding: 10px 20px;
+         background-color: rgb(210, 59, 59);
+         color: #000000;
+         border-radius: 4px;
+         cursor: pointer;
+         width: 140px;
+         }
+         form.delete-form button[type="submit"]:hover {
+         background-color: darkred;
+         }
+         .popup {
+         display: none;
+         position: fixed;
+         top: 50%;
+         width: 400px;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         background-color: #f2f2f2;
+         padding: 20px;
+         border-radius: 5px;
+         border: 1px solid #888;
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+         z-index: 9999;
+         }
+         .popup-content {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         text-align: center;
+         }
+         .close {
+         position: absolute;
+         top: 10px;
+         right: 10px;
+         font-size: 20px;
+         font-weight: bold;
+         cursor: pointer;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="logo">
+            CarryTrack
+         </div>
+      </div>
+      <div class="container">
+         <form class="edit-form" method="POST" action="{% url 'updateProfile' student.matricID %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="studentName">Student Name:</label>
+            <input type="text" id="studentName" name="studentName" value="{{ student.studentName }}" disabled>
+            <label for="matricID">Matric ID:</label>
+            <input type="text" id="matricID" name="matricID" value="{{ student.matricID }}" disabled>
+            <label for="mentorID">Mentor ID:</label>
+            <input type="text" id="mentorID" name="mentorID" value="{{ student.mentorID.pk }}">
+            <p class="notes"> (Note: Please refer to your Mentor before changing your Mentor ID)</p>
+            <label for="studentPhone">Phone:</label>
+            <input type="tel" id="studentPhone" name="studentPhone" value="{{ student.studentPhone }}">
+            <label for="studentImage">Student Image:</label>
+            <input type="file" id="studentImage" name="studentImage">
+            <label for="currentSemester">Current Semester:</label>
+            <input type="number" id="currentSemester" name="currentSemester" value="{{ student.currentSemester }}" max="8">
+            <button type="submit" onclick="validateMentorID()">Save Changes</button>
+         </form>
+         <form method="POST" action="{% url 'deleteProfile' student.matricID %}" class="delete-form">
+            {% csrf_token %}
+            <button class="buttonprofile delete-profile" type="submit">Delete Profile</button>
+         </form>
+      </div>
+      {% if update_error %}
+      <div id="updateErrorPopup" class="popup">
+         <div class="popup-content">
+            <span class="close" onclick="closePopup('updateErrorPopup')">&times;</span>
+            <h3>Update Error</h3>
+            <p>{{ update_error }}</p>
+            <p> Please refer to your Mentor! </p>
+         </div>
+      </div>
+      {% endif %}
+      <script>
+         function validateMentorID() {
+           window.location.href = "{% url 'updateProfile' student.matricID %}";
+         }
+      </script>
+      {% if update_error %}
+      <script>
+         var updateErrorMessage = '{{ update_error }}';
+         displayPopup('updateErrorPopup', updateErrorMessage);
+         
+         function displayPopup(popupId, errorMessage) {
+           var popup = document.getElementById(popupId);
+           var popupErrorMessage = popup.querySelector('p');
+           popup.style.display = 'block';
+           popupErrorMessage.innerHTML = errorMessage;
+         }
+         
+         function closePopup(popupId) {
+           var popup = document.getElementById(popupId);
+           popup.style.display = 'none';
+         }
+      </script>
+      {% endif %}
+   </body>
+</html>

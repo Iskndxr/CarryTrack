@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         * {
+         box-sizing: border-box;
+         }
+         html, body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         font-family: Arial, sans-serif;
+         background: linear-gradient(45deg, royalblue, #FFFFFF, #0000FF);
+         }
+         body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .form-group {
+         margin-bottom: 15px;
+         }
+         .form-group label {
+         display: block;
+         font-weight: bold;
+         color: #333;
+         }
+         .form-group button {
+         width: 100%;
+         padding: 10px;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         }
+         .form-group button:hover {
+         background-color: #23527c;
+         }   
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .form-group input[type="text"],
+         .form-group textarea {
+         width: 100%;
+         padding: 8px;
+         border: 1px solid #ccc;
+         }
+         .form-group button {
+         width: 100%;
+         padding: 10px;
+         background-color: #333;
+         color: #fff;
+         border: none;
+         cursor: pointer;
+         } 
+         .container {
+         width: 100%;
+         background-color: #fff;
+         max-width: 600px;
+         padding: 0 20px;
+         box-shadow: #b52f2f 0px 0px 10px;
+         border: #333 solid 2px;
+         }
+      </style>
+      <script>
+         window.addEventListener('DOMContentLoaded', () => {
+           const logoElement = document.querySelector('.logo');
+           const homeUrl = "{% url 'homeLecturer' %}";
+         
+           logoElement.addEventListener('click', () => {
+             window.location.href = homeUrl;
+           });
+         });
+      </script>
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="logo">
+            CarryTrack
+         </div>
+      </div>
+      <div class="container">
+         <h2>Leave Remarks</h2>
+         <form method="POST" action="{% url 'leaveRemarks' carryMark.pk %}">
+            {% csrf_token %}
+            <div class="form-group">
+               <label for="remarks">Remarks:</label>
+               <textarea id="remarks" name="remarks" rows="5" required placeholder="Leave remarks for your mentee to be motivated!"></textarea>
+            </div>
+            <div class="form-group">
+               <button type="submit">Submit</button>
+            </div>
+         </form>
+      </div>
+   </body>
+</html>

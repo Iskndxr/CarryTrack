@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         * {
+         box-sizing: border-box;
+         }
+         html, body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         font-family: Arial, sans-serif;
+         background: linear-gradient(45deg, royalblue, #FFFFFF, #0000FF);
+         }
+         body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .login-container {
+         width: 300px;
+         padding: 20px;
+         background-color: #f2f2f2;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         }
+         .login-container h2 {
+         text-align: center;
+         color: #333;
+         }
+         h2 {
+         text-align: center;
+         margin-bottom: 20px;
+         }
+         .form-group {
+         margin-bottom: 20px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         }
+         .form-group label {
+         font-weight: bold;
+         display: block;
+         text-align: center;
+         }
+         .form-group table {
+         width: 100%;
+         }
+         .form-group table th,
+         .form-group table td {
+         padding: 8px;
+         text-align: left;
+         }
+         .form-group button {
+         width: 75%;
+         padding: 10px;
+         background-color: #333;
+         color: #fff;
+         border: none;
+         cursor: pointer;
+         }
+         .form-group button:hover {
+         background-color: #111;
+         }
+         .popup {
+         display: none;
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         background-color: #f2f2f2;
+         padding: 20px;
+         border-radius: 5px;
+         border: 1px solid #888;
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+         z-index: 9999;
+         }
+         .popup-content {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         text-align: center;
+         }
+         .close {
+         position: absolute;
+         top: 10px;
+         right: 10px;
+         font-size: 20px;
+         font-weight: bold;
+         cursor: pointer;
+         }
+         .container{
+         display: flex;
+         flex-direction: column;
+         padding: 20px;
+         border: #b52f2f solid 2px;
+         box-shadow: #b52f2f 0px 0px 10px;
+         background-color: #f2f2f2;
+         }
+         label{
+         font-weight: bold;
+         margin-top: 15px;
+         }
+      </style>
+      <script>
+         window.addEventListener('DOMContentLoaded', () => {
+           const logoElement = document.querySelector('.logo');
+           const homeUrl = "{% url 'homeStudent' %}";
+         
+           logoElement.addEventListener('click', () => {
+             window.location.href = homeUrl;
+           });
+         });
+         document.addEventListener('DOMContentLoaded', function() {
+           var popup = document.getElementById('existing-course-limit-popup');
+         
+           var closeBtn = popup.querySelector('.close');
+         
+           closeBtn.addEventListener('click', function() {
+             popup.style.display = 'none';
+             window.location.href = "{% url 'homeStudent' %}";
+           });
+         
+           function showPopup() {
+             popup.style.display = 'block';
+           }
+         
+           var carrymarkCount = parseInt('{{ carrymark_count }}');
+           var carrymarkLimit = 5;
+         
+           if (carrymarkCount >= carrymarkLimit) {
+             showPopup();
+           }
+         });
+      </script>
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="logo">
+            CarryTrack
+         </div>
+      </div>
+      <div class="container">
+         <h2>Add Course</h2>
+         <form method="POST" action="{% url 'save_courses' %}">
+            {% csrf_token %}
+            <div class="form-group">
+               <label for="courses">Select Courses (Minimum 1, Maximum 5):</label>
+               <table>
+                  <thead>
+                     <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Select</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% for course in available_courses %}
+                     <tr>
+                        <td>{{ course.courseCode }}</td>
+                        <td>{{ course.courseName }}</td>
+                        <td><input type="checkbox" name="courses[]" value="{{ course.courseCode }}"></td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div class="form-group">
+               <button type="submit">Save Courses</button>
+               <label for="courses">Note: You won't be able to select more than 5 courses at a time</label>
+            </div>
+         </form>
+      </div>
+      <div id="existing-course-limit-popup" class="popup">
+         <div class="popup-content">
+            <span class="close">&times;</span>
+            <p>You have reached the maximum limit of 5 courses.</p>
+            <p>Please delete a course before adding a new one.</p>
+         </div>
+      </div>
+   </body>
+</html>

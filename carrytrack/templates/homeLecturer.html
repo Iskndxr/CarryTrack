@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         * {
+         box-sizing: border-box;
+         }
+         html, body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         font-family: Arial, sans-serif;
+         background: linear-gradient(45deg, royalblue, #FFFFFF, #0000FF);
+         background-size: 200% 200%;
+         }
+         body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .navbar form {
+         margin-left: auto;
+         display: flex;
+         align-items: center;
+         }
+         .navbar form button {
+         padding: 20px 20px;
+         background-color: grey;
+         color: #fff;
+         border: none;
+         cursor: pointer;
+         margin-left: 10px;
+         }
+         .navbar form button:hover {
+         background-color: #111;
+         }
+         .box {
+         width: 200px;
+         padding: 20px;
+         background-color: #f2f2f2;
+         border: 1px solid #ccc;
+         text-align: center;
+         margin-bottom: 20px;
+         cursor: pointer;
+         border-radius: 5px;
+         overflow: hidden;
+         text-overflow: ellipsis;
+         white-space: nowrap;
+         }
+         .box img {
+         width: 100px;
+         height: 100px;
+         object-fit: cover;
+         border-radius: 50%;
+         margin-bottom: 10px;
+         }
+         .box h2 {
+         font-size: 20px;
+         margin-bottom: 5px;
+         }
+         .box h3 {
+         font-size: 16px;
+         color: #666;
+         }
+         p {
+         font-size: 30px;
+         text-align: center;
+         }
+         .grid-container {
+         width: 100%;
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(calc(20% - 20px), 1fr));
+         row-gap: 10px;
+         column-gap: 10px;
+         justify-items: center;
+         align-items: center;
+         height: auto;
+         overflow-x: hidden;
+         }
+      </style>
+      <script>
+         window.addEventListener('DOMContentLoaded', () => {
+             const logoElement = document.querySelector('.logo');
+             const homeUrl = "{% url 'homeLecturer' %}";
+         
+             logoElement.addEventListener('click', () => {
+                 window.location.href = homeUrl;
+             });
+         });
+         
+         window.addEventListener('DOMContentLoaded', () => {
+             const boxes = document.querySelectorAll('.box');
+         
+             boxes.forEach(box => {
+                 box.addEventListener('click', () => {
+                     const matricID = box.getAttribute('data-matricID'); // Get the matricID value from the data attribute
+         
+                     window.location.href = `/studentCarrymark/${matricID}/`;
+                 });
+             });
+         });
+      </script>
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="logo">
+            CarryTrack
+         </div>
+         <form method="POST" action="{% url 'logoutLecturer' %}">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+         </form>
+      </div>
+      {% if students %}
+      <div class="grid-container">
+         {% for student in students %}
+         <div class="box" data-matricID="{{ student.matricID }}">
+            {% if student.studentImage %}
+            <img src="{{ student.studentImage.url }}" alt="image" />
+            {% else %}
+            <img src="/media/blank-person.jpg" alt="image" />
+            {% endif %}
+            <h2>{{ student.studentName }}</h2>
+            <h3>{{ student.matricID }}</h3>
+         </div>
+         {% endfor %}
+      </div>
+      {% else %}
+      <p style="font-weight: bold; font-size: 30px; text-shadow: #f2f2f2 0px 0px 20px;">None of your mentees have registered yet! Ask them to register now.</p>
+      {% endif %}
+   </body>
+</html>

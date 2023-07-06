@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         html, body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         font-family: Arial, sans-serif;
+         background: linear-gradient(45deg, #FF0000, #0000FF, #FFFFFF);
+         }
+         body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .login-container {
+         width: 300px;
+         padding: 20px;
+         background-color: #f2f2f2;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         }
+         .login-container h2 {
+         text-align: center;
+         color: #333;
+         }
+         .form-group {
+         margin-bottom: 15px;
+         }
+         .form-group label {
+         display: block;
+         font-weight: bold;
+         color: #333;
+         }
+         .form-group input[type="text"],
+         .form-group input[type="password"] {
+         width: 100%;
+         padding: 8px;
+         border: 1px solid #ccc;
+         border-radius: 3px;
+         }
+         .form-group button {
+         width: 100%;
+         padding: 10px;
+         background-color: #337ab7;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         }
+         .form-group button:hover {
+         background-color: #23527c;
+         }    
+         .button {
+         text-align: right;
+         margin-top: 10px;
+         }
+         .button button {
+         padding: 8px 15px;
+         background-color: royalblue;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         margin-left: 10px;
+         }
+         .button button:hover {
+         background-color: #000102;
+         }
+         .popup {
+         display: none;
+         position: fixed;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         background-color: #f2f2f2;
+         padding: 20px;
+         border-radius: 5px;
+         border: 1px solid #888;
+         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+         z-index: 9999;
+         }
+         .popup-content {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         text-align: center;
+         }
+         .close {
+         position: absolute;
+         top: 10px;
+         right: 10px;
+         font-size: 20px;
+         font-weight: bold;
+         cursor: pointer;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="logo">
+            CarryTrack
+         </div>
+      </div>
+      <div class="login-container">
+         <h2>KPMB CarryTrack</h2>
+         <form id="loginForm" method="POST" action="{% url 'loginLecturer' %}">
+            <div class="form-group">
+               <label for="lecturerID">Lecturer ID:</label>
+               <input type="text" class="form-control" id="lecturerID" name="lecturerID" required>
+            </div>
+            <div class="form-group">
+               <label for="password">Password:</label>
+               <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+               <button type="submit">Log In</button>
+            </div>
+            <div class="button">
+               <button type="button" onclick="studentLogin()">Student Login</button>
+            </div>
+            {% csrf_token %}
+         </form>
+      </div>
+      {% if login_error %}
+      <div id="loginErrorPopup" class="popup">
+         <div class="popup-content">
+            <span class="close" onclick="closePopup('loginErrorPopup')">&times;</span>
+            <h3>Login Error</h3>
+            <p>{{ login_error_message }}</p>
+         </div>
+      </div>
+      <script>
+         var loginErrorMessage = '{{ login_error }}';
+         displayPopup('loginErrorPopup', loginErrorMessage);
+         
+         function displayPopup(popupId, errorMessage) {
+           var popup = document.getElementById(popupId);
+           var popupErrorMessage = popup.querySelector('p');
+           popup.style.display = 'block';
+           popupErrorMessage.innerHTML = errorMessage;
+         }
+         
+         function closePopup(popupId) {
+           var popup = document.getElementById(popupId);
+           popup.style.display = 'none';
+         }
+      </script>
+      {% endif %}
+      <script>
+         function studentLogin() {
+             document.getElementById('loginForm').action = "{% url 'login' %}";
+             document.getElementById('loginForm').submit();
+         }
+      </script>
+   </body>
+</html>

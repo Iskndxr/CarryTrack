@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <style>
+         * {
+         box-sizing: border-box;
+         }
+         html, body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         font-family: Arial, sans-serif;
+         background: linear-gradient(45deg, royalblue, #FFFFFF, #0000FF);
+         }
+         body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .form-group {
+         margin-bottom: 15px;
+         }
+         .form-group label {
+         display: block;
+         font-weight: bold;
+         color: #333;
+         }
+         .form-group input[type="text"],
+         .form-group input[type="password"] {
+         width: 100%;
+         padding: 8px;
+         border: 1px solid #ccc;
+         border-radius: 3px;
+         }
+         .form-group button {
+         width: 100%;
+         padding: 10px;
+         background-color: #337ab7;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         }
+         .form-group button:hover {
+         background-color: #23527c;
+         }    
+         .button {
+         text-align: right;
+         margin-top: 10px;
+         }
+         .button button {
+         padding: 8px 15px;
+         background-color: royalblue;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         margin-left: 10px;
+         }
+         .button button:hover {
+         background-color: #000102;
+         }
+         .container {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         margin-top: 15px;
+         }
+         .profile {
+         display: flex;
+         align-items: center;
+         margin-bottom: 50px;
+         border: 1px solid #ccc;
+         padding: 20px;
+         border-radius: 4px;
+         background-color: #f2f2f2;
+         box-shadow: #b52f2f 0px 0px 10px;
+         }
+         .profile-image {
+         flex-shrink: 0;
+         margin-right: 20px;
+         }
+         .profile-info {
+         flex-grow: 1;
+         }
+         .profile img {
+         width: 200px;
+         height: 200px;
+         object-fit: cover;
+         border-radius: 50%;
+         }
+         .profile h2 {
+         margin-top: 20px;
+         font-size: 24px;
+         }
+         .profile p {
+         margin-top: 10px;
+         font-size: 16px;
+         color: #666;
+         }    
+         .welcome-message {
+         margin-bottom: 20px;
+         text-align: center;
+         font-size: 30px;
+         }
+         button.buttonprofile {
+         align-self: flex-end;
+         margin-top: 20px;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         }
+         button.buttonprofile:hover {
+         background-color: #111;
+         }
+         .add-course-button {
+         display: inline-block;
+         margin-top: 20px;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 4px;
+         }
+         .add-course-button:hover {
+         background-color: #111;
+         }
+         table {
+         width: 100%;
+         border-collapse: collapse;
+         margin-bottom: 20px;
+         background-color: #f2f2f2;
+         }
+         table th,
+         table td {
+         padding: 10px;
+         border: 1px solid #ccc;
+         }
+         table th {
+         background-color: #f2f2f2;
+         text-align: left;
+         }
+         table td a {
+         display: inline-block;
+         padding: 10px 20px;
+         background-color: #333;
+         color: #fff;
+         text-decoration: none;
+         border-radius: 4px;
+         }
+         table td a:hover {
+         background-color: #111;
+         }
+         html, body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         font-family: Arial, sans-serif;
+         background: linear-gradient(45deg, #FF0000, #0000FF, #FFFFFF);
+         }
+         body {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .navbar {
+         background-color: #b52f2f;
+         width: 100%;
+         position: fixed;
+         top: 0;
+         left: 0;
+         height: 60px;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 0 20px;
+         box-sizing: border-box;
+         }
+         .navbar form {
+         margin-left: auto;
+         display: flex;
+         align-items: right;
+         }
+         .navbar form button {
+         padding: 15px;
+         background-color: #b1a0a0;
+         color: #231717;
+         border: none;
+         font-weight: bold;
+         border-radius: 3px;
+         cursor: pointer;
+         margin-left: 10px;
+         }
+         .navbar form button:hover {
+         background-color: royalblue;
+         }
+         .logo {
+         float: left;
+         padding: 20px;
+         color: white;
+         font-size: 24px;
+         font-weight: bold;
+         cursor: pointer;
+         flex-grow: 1;
+         }
+         .logo span {
+         font-size: 32px;
+         }
+         .login-container {
+         width: 300px;
+         padding: 20px;
+         background-color: #f2f2f2;
+         border: 1px solid #ccc;
+         border-radius: 5px;
+         }
+         .login-container h2 {
+         text-align: center;
+         color: #333;
+         }
+         .form-group {
+         margin-bottom: 15px;
+         }
+         .form-group label {
+         display: block;
+         font-weight: bold;
+         color: #333;
+         }
+         .form-group input[type="text"],
+         .form-group input[type="password"] {
+         width: 100%;
+         padding: 8px;
+         border: 1px solid #ccc;
+         border-radius: 3px;
+         }
+         .form-group button {
+         width: 100%;
+         padding: 10px;
+         background-color: #337ab7;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         }
+         .form-group button:hover {
+         background-color: #23527c;
+         }    
+         .button {
+         text-align: right;
+         margin-top: 10px;
+         }
+         .button button {
+         padding: 8px 15px;
+         background-color: royalblue;
+         color: #fff;
+         border: none;
+         border-radius: 3px;
+         cursor: pointer;
+         margin-left: 10px;
+         }
+         .button button:hover {
+         background-color: #000102;
+         }
+         .welcome-message {
+          text-shadow: 0px 0px 30px rgba(48, 39, 39, 0.5);
+          color: #fff;
+          font-weight: bold;
+        }
+      </style>
+      <script>
+         window.addEventListener('DOMContentLoaded', () => {
+           const logoElement = document.querySelector('.logo');
+           const homeUrl = "{% url 'homeStudent' %}";
+           
+           logoElement.addEventListener('click', () => {
+             window.location.href = homeUrl;
+           });
+         });
+      </script>
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="logo">
+            CarryTrack
+         </div>
+         <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <button type="submit">Log Out</button>
+         </form>
+      </div>
+      <div class="container">
+         <div class="profile">
+            <div class="profile-image">
+               {% if student.studentImage %}
+               <img src="{{ student.studentImage.url }}" alt="image" />
+               {% endif %}  
+            </div>
+            <div class="profile-info">
+               <h2>{{ student.studentName }}</h2>
+               <p>Matric ID: {{ student.matricID }}</p>
+               <p>Phone: {{ student.studentPhone }}</p>
+               <p>Semester: {{ student.currentSemester }}</p>
+               <form action="{% url 'studentProfile' student.matricID %}" method="GET">
+                  <button class="buttonprofile" type="submit">Edit Profile</button>
+               </form>
+            </div>
+         </div>
+         {% if carrymarks %}
+         <div class="table-section">
+            <table>
+               <thead>
+                  <tr>
+                     <th>Course</th>
+                     <th>Course Name</th>
+                     <th>Assessment 1</th>
+                     <th>Assessment 2</th>
+                     <th>Assessment 3</th>
+                     <th>Assessment 4</th>
+                     <th>Total Marks</th>
+                     <th>Is Reviewed</th>
+                     <th>Remarks</th>
+                     <th>Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for carrymark in carrymarks %}
+                  <tr>
+                     <td>{{ carrymark.course.courseCode }}</td>
+                     <td>{{ carrymark.course.courseName }}</td>
+                     <td>{{ carrymark.assesment1|add:0 }}</td>
+                     <td>{{ carrymark.assesment2|add:0 }}</td>
+                     <td>{{ carrymark.assesment3|add:0 }}</td>
+                     <td>{{ carrymark.assesment4|add:0 }}</td>
+                     <td>{{ carrymark.assesment1|add:0|add:carrymark.assesment2|add:0|add:carrymark.assesment3|add:0|add:carrymark.assesment4|add:0 }}/{{ carrymark.course.maxCarryMark }}</td>
+                     <td>
+                        {% if carrymark.is_reviewed %}
+                        <span>&#x2705;</span> <!-- Checkmark emoji -->
+                        {% else %}
+                        <span>&#x274C;</span> <!-- X emoji -->
+                        {% endif %}
+                     </td>
+                     <td>{{ carrymark.remarks }}</td>
+                     <td>
+                        <a href="{% url 'update_carrymark' carrymark.pk %}">Update</a>
+                        <a href="{% url 'delete_carrymark' carrymark.pk %}">Delete</a>
+                     </td>
+                  </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+         {% else %}
+         <div class="welcome-message">
+            Not submitted your carrymark yet? Get started.
+         </div>
+         {% endif %}
+         <div class="add-course-button-section">
+            <a href="{% url 'add_course' %}" class="add-course-button">Add Course</a>
+         </div>
+      </div>
+   </body>
+</html>
